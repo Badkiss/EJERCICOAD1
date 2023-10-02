@@ -26,6 +26,18 @@ public class Pelicula{
             }
         }
     };
+    public static Comparator<Pelicula> minRecaudado=new Comparator<Pelicula>() {
+        @Override
+        public int compare(Pelicula o1,Pelicula o2) {
+            if(o1.getTotalGanado()== o2.getTotalGanado()){
+                return 0;
+            } else if (o1.getTotalGanado()< o2.getTotalGanado()){
+                return -1;
+            }else {
+                return 1;
+            }
+        }
+    };
     private int ranking ;
    private String titulo;
    private int espectadores,totalGanado;

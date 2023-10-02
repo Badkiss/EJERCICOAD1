@@ -1,0 +1,56 @@
+package Controlador;
+
+import Model.Caso;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.sql.Date;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class TramitacionArchivos2 {
+    public static List<Caso> diasMas(List<Caso>casos){
+       return casos.stream().filter((n)->n.getCasosValencia()!=0).sorted(new Comparator<Caso>() {
+            @Override
+            public int compare(Caso o1, Caso o2) {
+                if (o1.getCasosValencia()>o2.getCasosValencia()){
+                    return -1;
+                } else if (o1.getCasosValencia()<o2.getCasosValencia()) {
+                    return 1;
+                }else {
+                    return 0;
+                }
+            }
+        }).toList();
+    }
+    public static long masHombres(List<Caso>casos){
+       return casos.stream().filter((n)->n.getHombres()>n.getMujeres()).count();
+    }
+    public static long masMujeres(List<Caso>casos){
+        return casos.stream().filter((n)->n.getHombres()<n.getMujeres()).count();
+    }
+    public static long mismos(List<Caso>casos){
+        return casos.stream().filter((n)->n.getCasosComunidad()!=0).filter((n)->n.getHombres()==n.getMujeres()).count();
+    }
+    public static void casosAño(List<Caso>casos){
+           Map<Integer,List<Caso>>diasB=casos.stream().filter((n)->n.getCasosComunidad()>100).collect(Collectors.groupingBy((n)->(n.getFecha()).getYear()));
+           List<Integer> keys = new ArrayList<>(diasB.keySet());
+        for (int i = 0; i < keys.size(); i++) {
+            try (BufferedWriter bufferedWriter=Files.newBufferedWriter(Path.of(keys.get(i)+1900+"casosm100.csv"),Charset.forName("UTF-8"))){
+                for (int j = 0; j < diasB.get(keys.get(i)).size() ; j++) {
+                    bufferedWriter.write(diasB.get(keys.get(i)).get(j).toString()+"\n");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+
+
+    }
+}

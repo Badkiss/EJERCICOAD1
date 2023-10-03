@@ -49,8 +49,34 @@ public class TramitacionArchivos2 {
                 e.printStackTrace();
             }
         }
-
-
-
     }
+    public static void casosMes(List<Caso>casos){
+        Map<Integer,List<Caso>> mes=casos.stream().filter((n)->n.getCasosComunidad()>70).collect(Collectors.groupingBy((n)->n.getFecha().getMonth()));
+    List<Integer> keys=new ArrayList<>(mes.keySet());
+        for (int i = 0; i < keys.size(); i++) {
+            if (keys.get(i)<10) {
+            try (BufferedWriter bufferedWriter = Files.newBufferedWriter(Path.of((mes.get(keys.get(i)).get(0).getFecha().getYear() + 1900) + "0" +  (keys.get(i) + 1) + "casosm70.csv"), Charset.forName("UTF-8"))) {
+                for (int j = 0; j < mes.get(i).size(); j++) {
+                    bufferedWriter.write(mes.get(keys.get(i)).get(j).toString() + "\n");
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+                if (keys.get(i)<10) {
+                    try (BufferedWriter bufferedWriter = Files.newBufferedWriter(Path.of((mes.get(keys.get(i)).get(0).getFecha().getYear() + 1900) + "" +  (keys.get(i) + 1) + "casosm70.csv"), Charset.forName("UTF-8"))) {
+                        for (int j = 0; j < mes.get(i).size(); j++) {
+                            bufferedWriter.write(mes.get(keys.get(i)).get(j).toString() + "\n");
+                        }
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+    }
+}
 }

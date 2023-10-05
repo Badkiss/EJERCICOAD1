@@ -9,8 +9,9 @@ import java.util.stream.Stream;
 
 public class TramitacionArchivos {
 
-    public static Map<Integer,Integer> recaudacionPorMes(List<Pelicula>peliculas){
-        return peliculas.stream().collect(Collectors.groupingBy((n)-> n.getFechaDeEstreno().getMonth(),Collectors.summingInt(n->n.getTotalGanado())));
+    public static Map<Integer,Integer> MayorRecaudacion(List<Pelicula>peliculas){
+   int max=  peliculas.stream().collect(Collectors.groupingBy((n)-> n.getFechaDeEstreno().getMonth(),Collectors.summingInt(n->n.getTotalGanado()))).entrySet().stream().max(Map.Entry.comparingByValue()).get().getValue();
+     return peliculas.stream().collect(Collectors.groupingBy((n)-> n.getFechaDeEstreno().getMonth(),Collectors.summingInt(n->n.getTotalGanado()))).entrySet().stream().filter(((Map.Entry.comparingByValue()).get)==max);
     };
     public static Map<Integer,Long> peliculasPorMes(List<Pelicula>peliculas){
         return peliculas.stream().collect(Collectors.groupingBy(n->n.getFechaDeEstreno().getMonth(),Collectors.counting()));

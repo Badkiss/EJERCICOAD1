@@ -14,8 +14,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class TramitacionArchivos2 {
-    public static List<Caso> diasMas(List<Caso>casos){
-       return casos.stream().filter((n)->n.getCasosValencia()!=0).sorted(new Comparator<Caso>() {
+    public static List<Caso> diaMas(List<Caso>casos){
+       int max= casos.stream().filter((n)->n.getCasosValencia()!=0).sorted(new Comparator<Caso>() {
             @Override
             public int compare(Caso o1, Caso o2) {
                 if (o1.getCasosValencia()>o2.getCasosValencia()){
@@ -26,7 +26,8 @@ public class TramitacionArchivos2 {
                     return 0;
                 }
             }
-        }).toList();
+        }).toList().get(0).getCasosValencia();
+        return casos.stream().filter((n)->n.getCasosValencia()==max).toList();
     }
     public static long masHombres(List<Caso>casos){
        return casos.stream().filter((n)->n.getHombres()>n.getMujeres()).count();
@@ -70,8 +71,6 @@ public class TramitacionArchivos2 {
                         for (int j = 0; j < mes.get(i).size(); j++) {
                             bufferedWriter.write(mes.get(keys.get(i)).get(j).toString() + "\n");
                         }
-
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

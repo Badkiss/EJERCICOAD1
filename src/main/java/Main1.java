@@ -12,7 +12,7 @@ public class Main1 {
         List<Pelicula> pls=new ArrayList<>();
         pls=FormateoArchivos.formateoArchivo("peliculas.csv");
         Map<Integer,Integer> mes;
-       mes=TramitacionArchivos.recaudacionPorMes(pls);
+       mes=TramitacionArchivos.MayorRecaudacion(pls);
        mes.forEach((n,s)->System.out.println(n+1+" "+s));
        Map<Integer,Long>mesc;
        mesc=TramitacionArchivos.peliculasPorMes(pls);

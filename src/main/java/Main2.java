@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class Main2 {
     public static void main(String[] args) {
         List<Caso> casos =FormateoArchivos2.inicializarArchivo();
-        List<Caso>valdias=TramitacionArchivos2.diasMas(casos);
+        List<Caso>valdias=TramitacionArchivos2.diaMas(casos);
         valdias.stream().forEach((n)->System.out.println(n.getFecha()+" Num Casos "+n.getCasosValencia()));
         long numMasHombres=TramitacionArchivos2.masHombres(casos);
         System.out.println(numMasHombres);
@@ -30,7 +30,7 @@ public class Main2 {
         int valor;
         String año="",mes;
         Pattern pattern=Pattern.compile("^(\\d{4})casosm100\\.csv$");
-        Pattern pattern2=Pattern.compile("^(\\d{4})(0[1-9]|1[0-2])casom70\\.csv$");
+        Pattern pattern2=Pattern.compile("^(\\d{4})");
         Scanner sys=new Scanner(System.in);
         do {
             System.out.println("1 por año");
@@ -67,9 +67,7 @@ public class Main2 {
                         String line="";
                         if (Files.exists(Path.of(mes))) {
                         try (BufferedReader br = new BufferedReader(new FileReader(String.valueOf(Path.of(mes))))) {
-                            while (){
 
-                            }
                         } catch (FileNotFoundException e) {
                             throw new RuntimeException(e);
                         } catch (IOException e) {
